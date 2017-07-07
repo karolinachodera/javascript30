@@ -39,26 +39,28 @@
 	startHandSec(sec);
 	
 	function moveHandHour(hourPos) {
-		handHour.style.transform = `rotate(${hourPos + 30}deg)`;
 		hourPosition += 30;
-		setTimeout(moveHandHour, 3600000, hourPosition);
-	}
-	
-	function moveHandSec(secPos) {
-		handSec.style.transform = `rotate(${secPos + 6}deg)`;
-		secPosition += 6;
-		setTimeout(moveHandSec, 1000, secPosition);
-	}
+		handHour.style.transform = `rotate(${hourPos + 30}deg)`;
+	};
 	
 	function moveHandMin(minPos) {
-		handMin.style.transform = `rotate(${minPos + 6}deg)`;
 		minPosition += 6;
-		setTimeout(moveHandMin, 60000, minPosition);
-	}
+		handMin.style.transform = `rotate(${minPos + 6}deg)`;
+		if((minPosition - 270) % 360 === 0) {
+			moveHandHour(hourPosition);
+		}
+	};
 	
-	moveHandHour(hourPosition);
+	function moveHandSec(secPos) {
+		secPosition += 6;
+		handSec.style.transform = `rotate(${secPos + 6}deg)`;
+		if((secPosition - 270) % 360 === 0) {
+			moveHandMin(minPosition);
+		}		
+		setTimeout(moveHandSec, 1000, secPosition);
+	};
+
 	moveHandSec(secPosition);
-	moveHandMin(minPosition);
 	
 	
 	
